@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project.WPF.Resources.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace Project.WPF
         public MainWindow()
         {
             InitializeComponent();
+            var card = CardRepository.GetCard();
+
         }
     }
 }
