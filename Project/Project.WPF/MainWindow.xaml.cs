@@ -24,7 +24,7 @@ namespace Project.WPF
         public MainWindow()
         {
             InitializeComponent();
-            var card = CardRepository.GetCard();
+            var cards = CardRepository.GetCard();
 
         }
     }
