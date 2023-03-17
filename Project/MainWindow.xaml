@@ -7,12 +7,28 @@
         xmlns:view="clr-namespace:Project.View"
         xmlns:vm="clr-namespace:Project.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="900"
+        Background="Black">
 
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
     <Grid>
-        <Frame NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Background="Black" BorderThickness="1">
+            <Border.Effect>
+                <DropShadowEffect/>
+            </Border.Effect>
+            <StackPanel Orientation="Vertical">
+                <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="75" Margin="0, 10"/>
+                <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="75" Margin="0, 10"/>
+                <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="75" Margin="0, 10"/>
+                <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="75" Margin="0, 10"/>
+            </StackPanel>
+        </Border>
+        <Frame Grid.Column="1" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>           
     </Grid>
 </Window>

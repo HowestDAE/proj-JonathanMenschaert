@@ -7,18 +7,30 @@
       xmlns:vm="clr-namespace:Project.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="OverviewPage">
+      Title="OverviewPage"
+      Background="#333333">
 
     <Page.DataContext>
         <vm:OverviewPageVM/>
     </Page.DataContext>
     <Grid>
-        <ListBox ItemsSource="{Binding Cards}"  Background="LightGray" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox ItemsSource="{Binding Cards}" 
+                 SelectedItem="{Binding SelectedCard}"
+                 Grid.Column="0"
+                 Background="#333333" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 HorizontalAlignment="Stretch">
+            
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="140">
+                   
+                    <Grid Width="160">
                         <Image Source="{Binding SmallImage}" Width="auto" Height="auto"/>
                     </Grid>
+                    
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>
@@ -27,5 +39,23 @@
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
+        <Grid Grid.Column="1">            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+
+            <Image HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Grid.Column="1" Margin="10" Width="auto" Source="{Binding SelectedCard.SmallImage}"/>
+            <Button BorderBrush="Blue" Background="Red" Foreground="White" Content="Test" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="20">
+                
+            </Button>
+        </Grid>
     </Grid>
 </Page>
