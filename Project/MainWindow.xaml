@@ -14,21 +14,40 @@
         <vm:MainViewModel/>
     </Window.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="75"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="75"/>
         </Grid.ColumnDefinitions>
-        <Border Background="Black" BorderThickness="1">
+        <Grid.Resources>
+            <SolidColorBrush x:Key="TopbarColor" Color="#404040"/>
+            <SolidColorBrush x:Key="SidebarColor" Color="#262626"/>
+        </Grid.Resources>
+        <Border Grid.Row ="0" Background="{StaticResource TopbarColor}" Grid.ColumnSpan="3"/>
+        <Border Grid.Row="1" Background="{StaticResource SidebarColor}">
             <Border.Effect>
                 <DropShadowEffect/>
             </Border.Effect>
-            <StackPanel Orientation="Vertical">
-                <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="75" Margin="0, 10"/>
-                <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="75" Margin="0, 10"/>
-                <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="75" Margin="0, 10"/>
-                <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="75" Margin="0, 10"/>
+            <StackPanel Orientation="Vertical" Margin="0,20,0,0">
+                <Button Background="{StaticResource SidebarColor}" BorderThickness="0" >
+                    <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="60" Margin="0, 10"/>
+                </Button>
+                <Button Background="{StaticResource SidebarColor}" BorderThickness="0">
+                    <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="60" Margin="0, 10"/>
+                </Button>
+                <Button Background="{StaticResource SidebarColor}" BorderThickness="0">
+                    <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="60" Margin="0, 10"/>
+                </Button>
+                <Button Background="{StaticResource SidebarColor}" BorderThickness="0">
+                    <Image Source="https://images.pokemontcg.io/swsh1/symbol.png" Width="60" Margin="0, 10"/>
+                </Button>
             </StackPanel>
         </Border>
-        <Frame Grid.Column="1" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>           
+        <Frame Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
+        <Border Grid.Row ="1" Background="#262626" Grid.Column = "2"/>
     </Grid>
 </Window>
