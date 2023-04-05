@@ -63,11 +63,43 @@ namespace Project.Repository
                         string cardTypeClass = card.SelectToken("supertype").ToObject<string>();
                         Type cardType = GetCardType(cardTypeClass.Replace("é", "e")).ActualType;
                         var currentCard = Activator.CreateInstance(cardType) as BaseCard;
-
                         currentCard.Id = card.SelectToken("id").ToObject<string>();
                         currentCard.Name = card.SelectToken("name").ToObject<string>();
                         currentCard.SuperType = cardTypeClass;
-                        //currentCard.SubTypes = card.SelectToken("subtypes").ToObject<string[]>();
+
+                        var subTypeToken = card.SelectToken("subtypes");
+                        if (subTypeToken != null)
+                        {
+                            currentCard.SubTypes = subTypeToken.ToObject<List<string>>();
+                        }
+
+                        var energyCard = currentCard as EnergyCard;
+                        if (energyCard != null)
+                        {
+                            energyCard.Rules = card.SelectToken("rules").ToObject<List<string>>();
+                        }
+
+                        var trainerCard = currentCard as TrainerCard;
+                        if (trainerCard != null)
+                        {
+                            trainerCard.Rules = card.SelectToken("rules").ToObject<List<string>>();
+                        }
+
+                        var pokemonCard = currentCard as PokemonCard;
+                        if (pokemonCard != null)
+                        {
+                            var attacksToken = card.SelectToken("attacks");
+                            if (attacksToken != null)
+                            {
+                                pokemonCard.Attacks = attacksToken.ToObject<List<Attack>>();
+                            }
+
+                            var abilityToken = card.SelectToken("abilities");
+                            if (abilityToken != null)
+                            {
+                                pokemonCard.Abilities = abilityToken.ToObject<List<Ability>>();
+                            }
+                        }
 
                         cards.Add(currentCard);
                     }
