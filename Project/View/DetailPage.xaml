@@ -1,0 +1,257 @@
+﻿<Page x:Class="Project.View.DetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Project.View"
+      xmlns:conv="clr-namespace:Project.View.Converters"
+      xmlns:vm="clr-namespace:Project.ViewModel"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DetailPage">
+    <Page.DataContext>
+        <vm:DetailPageVM/>
+    </Page.DataContext>
+    <Page.Resources>
+        <conv:IdToImageConverter x:Key="IdToImage"/>
+        <conv:TypeListToString x:Key="TypeListToString"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.75*"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Detail page image -->
+        <Grid Background="Gray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="1.2*"/>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.1*"/>
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <SolidColorBrush x:Key="BorderColor" Color="red"/>
+
+            </Grid.Resources>
+            <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="5" Grid.Column="1" Grid.Row="3">
+                <Grid>
+                    <Rectangle Fill="DarkGray"/>
+                    <Image Margin="20 0" Source="{Binding CurrentCard.Id, Converter={StaticResource IdToImage}}" HorizontalAlignment="Center"/>
+                </Grid>
+            </Border>
+            <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="5" Grid.Column="1" Grid.Row="1">
+                <Grid >
+                    <Rectangle Fill="DarkGray"/>
+                    <Image Margin="10 25" Width="auto" Source="{Binding CurrentCard.BigImage}" HorizontalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+        </Grid>
+        <!-- Separator -->
+        <Rectangle Grid.Column="1" Fill="Gray"/>
+        <!-- Information panel -->
+
+        <ScrollViewer Grid.Column="2">
+            <Grid Margin="0 0 0 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1">
+                    <!-- General information -->
+                    <TextBlock Margin="0 50 0 0" FontSize="30" HorizontalAlignment="Center" Foreground="White" 
+                           Text="General Information" />
+                    <Rectangle Margin="0 0 0 20" Height="1" Fill="White"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock FontSize="20" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Foreground="White" Text="Name:"/>
+                        <TextBlock FontSize="20" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Foreground="White" Text="Classification:"/>
+                        <TextBlock FontSize="20" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" Text="Subtypes:">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=subtypeList, Path=ItemsSource}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock FontSize="20" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" 
+                               Foreground="White" Text="{Binding CurrentCard.Name}"/>
+                        <TextBlock FontSize="20" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" 
+                               Foreground="White" Text="{Binding CurrentCard.SuperType}"/>
+                        
+                        <!-- Subtype list -->
+                        <ListBox x:Name="subtypeList" ItemsSource="{Binding CurrentCard.SubTypes}" Grid.Column="2" Grid.Row="2"
+                     Background="black" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0"
+                             HorizontalContentAlignment="Right" IsHitTestVisible="False">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontSize="20" Foreground="White" Text="{Binding}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+
+                    <!-- Ability list -->
+                    <TextBlock Margin="0 50 0 0" FontSize="30" HorizontalAlignment="Center" Foreground="White" Text="Abilities">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=abilityList, Path=ItemsSource}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <Rectangle Margin="0 0 0 20" Grid.Column="1" Height="1" Fill="White">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=abilityList, Path=ItemsSource}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                    <ListBox x:Name="abilityList" ItemsSource="{Binding CurrentCard.Abilities}" Grid.Row="2"
+                     Background="black" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0"
+                             HorizontalContentAlignment="Stretch" IsHitTestVisible="False">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock FontSize="20" Foreground="White" Text="{Binding AbilityName}"/>
+                                    <TextBlock Foreground="White" Text="Type: " Grid.Row="1" HorizontalAlignment="Left"/>
+                                    <TextBlock Foreground="White" Text="{Binding Type}" Grid.Row="1" HorizontalAlignment="Right"/>
+                                    <TextBlock Foreground="White" Text="Description: " Grid.Row="3" HorizontalAlignment="Left"/>
+                                    <TextBlock Margin="0 0 0 20" Foreground="White" Text="{Binding Description}" Grid.Row="4" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <!-- Attack List -->
+                    <TextBlock Margin="0 50 0 0" FontSize="30" HorizontalAlignment="Center" Foreground="White" Text="Attacks">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=attackList, Path=ItemsSource}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <Rectangle Margin="0 0 0 20" Grid.Column="1" Height="1" Fill="White">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=attackList, Path=ItemsSource}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                    <ListBox x:Name="attackList" ItemsSource="{Binding CurrentCard.Attacks}" Grid.Row="2"
+                     Background="black" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0"
+                             HorizontalContentAlignment="Stretch" IsHitTestVisible="False">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock FontSize="20" Foreground="White" Text="{Binding AttackName}"/>
+                                    <TextBlock Foreground="White" Text="Cost: " Grid.Row="1" HorizontalAlignment="Left"/>
+                                    <TextBlock Foreground="White" Text="{Binding Cost, Converter={StaticResource TypeListToString}}" Grid.Row="1" HorizontalAlignment="Right"/>
+                                    <TextBlock Foreground="White" Text="Damage: " Grid.Row="2" HorizontalAlignment="Left"/>
+                                    <TextBlock Foreground="White" Text="{Binding Damage}" Grid.Row="2" HorizontalAlignment="Right"/>
+                                    <TextBlock Foreground="White" Text="Description: " Grid.Row="3" HorizontalAlignment="Left"/>
+                                    <TextBlock Margin="0 0 0 20" Foreground="White" Text="{Binding Description}" Grid.Row="4" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <!-- Rules List -->
+                    <TextBlock Margin="0 50 0 0" FontSize="30" HorizontalAlignment="Center" Foreground="White" Text="Rules">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ruleList, Path=ItemsSource}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <Rectangle Margin="0 0 0 20" Grid.Column="1" Height="1" Fill="White">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ruleList, Path=ItemsSource}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                    <ListBox x:Name="ruleList" ItemsSource="{Binding CurrentCard.Rules}" Grid.Row="2"
+                     Background="black" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0"
+                             HorizontalContentAlignment="Stretch" IsHitTestVisible="False">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Foreground="White" Text="Rule: " Grid.Row="0" HorizontalAlignment="Left"/>
+                                    <TextBlock Margin="0 0 0 20" Foreground="White" Text="{Binding}" Grid.Row="1" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>
