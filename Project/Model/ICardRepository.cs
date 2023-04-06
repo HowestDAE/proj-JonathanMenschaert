@@ -8,6 +8,6 @@ namespace Project.Model
 {
     public interface ICardRepository
     {
-        Task<List<BaseCard>> LoadCardsAsync();
+        Task<List<BaseCard>> LoadCardsAsync(string query);
     }
 }

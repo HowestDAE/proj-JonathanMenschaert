@@ -73,7 +73,7 @@
                     <system:Double x:Key="PropertyNameSize">18</system:Double>
                     <system:Double x:Key="PropertyValueSize">15</system:Double>
                     <system:Double x:Key="PropertyDescriptionSize">15</system:Double>
-                    <SolidColorBrush x:Key="BgColor" Color="#2D2D2D"/>
+                    <SolidColorBrush x:Key="BgColor" Color="#545454"/>
                     <SolidColorBrush x:Key="HeaderColor" Color="Red"/>
                     <SolidColorBrush x:Key="SubHeaderColor" Color="Blue"/>
                     <SolidColorBrush x:Key="PropertyNameColor" Color="Yellow"/>

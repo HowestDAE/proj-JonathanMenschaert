@@ -12,31 +12,76 @@ namespace Project.Repository
     public class CardApiRepository : ICardRepository
     {
 
-        public static List<CardType> CardTypes { get; private set; }
-        public static List<CardType> GetCardTypes()
+        public List<CardType> CardTypes { get; private set; }
+        public async Task<List<CardType>> LoadCardTypesAsync()
         {
-            CardTypes = new List<CardType>();
-            CardTypes.Add(new CardType()
+            if (CardTypes != null) return CardTypes;
+            using (HttpClient client = new HttpClient())
             {
-                Class = "Energy"
-            });
+                try
+                {
+                    var endPoint = $"https://api.pokemontcg.io/v2/supertypes";
+                    var response = await client.GetAsync(endPoint);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new HttpRequestException(response.ReasonPhrase);
+                    }
+                    string json = await response.Content.ReadAsStringAsync();
+                    JObject superTypeObj = JObject.Parse(json);
+                    JToken superTypeArray = superTypeObj.SelectToken("data");
 
-            CardTypes.Add(new CardType()
-            {
-                Class = "Pokemon"
-            });
-
-            CardTypes.Add(new CardType()
-            {
-                Class = "Trainer"
-            });
-
-            return CardTypes;
+                    CardTypes = new List<CardType>();
+                    foreach (var superType in superTypeArray)
+                    {
+                        CardType cardType = new CardType();
+                        cardType.Class = superType.ToObject<string>();
+                        CardTypes.Add(cardType);                        
+                    }
+                    return CardTypes;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            return null;
         }
 
-        public static CardType GetCardType(string cardClass)
+        public async Task<List<string>> LoadPropertyAsync(string property)
         {
-            if (CardTypes == null) GetCardTypes();
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    var endPoint = $"https://api.pokemontcg.io/v2/{property}";
+                    var response = await client.GetAsync(endPoint);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new HttpRequestException(response.ReasonPhrase);
+                    }
+                    string json = await response.Content.ReadAsStringAsync();
+                    JObject typeObj = JObject.Parse(json);
+                    JToken typeArray = typeObj.SelectToken("data");
+
+                    List<string> types = new List<string>();
+                    foreach (var type in typeArray)
+                    {
+                        string cardType = type.ToObject<string>();
+                        types.Add(cardType);
+                    }
+                    return types;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            return null;
+        }
+
+        private async Task<CardType> GetCardType(string cardClass)
+        {
+            await LoadCardTypesAsync();
             foreach (var cardType in CardTypes)
             {
                 if (cardType.Class == cardClass) return cardType;
@@ -44,13 +89,13 @@ namespace Project.Repository
             return null;
         }
 
-        public async Task<List<BaseCard>> LoadCardsAsync()
+        public async Task<List<BaseCard>> LoadCardsAsync(string query)
         {
             using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    var endPoint = $"https://api.pokemontcg.io/v2/cards?pageSize=250&q=supertype:trainer";
+                    var endPoint = $"https://api.pokemontcg.io/v2/cards?{query}";
                     var response = await client.GetAsync(endPoint);
                     if (!response.IsSuccessStatusCode)
                     {
@@ -64,8 +109,8 @@ namespace Project.Repository
                     foreach(var card in cardArray)
                     {
                         string cardTypeClass = card.SelectToken("supertype").ToObject<string>();
-                        Type cardType = GetCardType(cardTypeClass.Replace("é", "e")).ActualType;
-                        var currentCard = Activator.CreateInstance(cardType) as BaseCard;
+                        CardType cardType = await GetCardType(cardTypeClass);
+                        var currentCard = Activator.CreateInstance(cardType.ActualType) as BaseCard;
                         currentCard.Id = card.SelectToken("id").ToObject<string>();
                         currentCard.Name = card.SelectToken("name").ToObject<string>();
                         currentCard.SuperType = cardTypeClass;
@@ -79,13 +124,21 @@ namespace Project.Repository
                         var energyCard = currentCard as EnergyCard;
                         if (energyCard != null)
                         {
-                            energyCard.Rules = card.SelectToken("rules").ToObject<List<string>>();
+                            var rules = card.SelectToken("rules");
+                            if (rules != null)
+                            {
+                                energyCard.Rules = rules.ToObject<List<string>>();
+                            }
                         }
 
                         var trainerCard = currentCard as TrainerCard;
                         if (trainerCard != null)
                         {
-                            trainerCard.Rules = card.SelectToken("rules").ToObject<List<string>>();
+                            var rules = card.SelectToken("rules");
+                            if (rules != null)
+                            {
+                                trainerCard.Rules = rules.ToObject<List<string>>();
+                            }
                         }
 
                         var pokemonCard = currentCard as PokemonCard;

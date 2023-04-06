@@ -101,6 +101,7 @@
     <Compile Include="ViewModel\DetailPageVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\OverviewPageApiVM.cs" />
+    <Compile Include="View\Converters\IdToIconConverter.cs" />
     <Compile Include="View\Converters\IdToImageConverter.cs" />
     <Compile Include="View\Converters\TypeListToString.cs" />
     <Compile Include="View\DetailPage.xaml.cs">
