@@ -91,21 +91,23 @@
     <Compile Include="Model\BaseCard.cs" />
     <Compile Include="Model\CardType.cs" />
     <Compile Include="Model\EnergyCard.cs" />
+    <Compile Include="Model\ICardRepository.cs" />
     <Compile Include="Model\IHasAttacks.cs" />
     <Compile Include="Model\IHasRules.cs" />
     <Compile Include="Model\PokemonCard.cs" />
     <Compile Include="Model\TrainerCard.cs" />
-    <Compile Include="Repository\CardRepository.cs" />
+    <Compile Include="Repository\CardApiRepository.cs" />
+    <Compile Include="Repository\CardLocalRepository.cs" />
     <Compile Include="ViewModel\DetailPageVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\OverviewPageVM.cs" />
+    <Compile Include="ViewModel\OverviewPageApiVM.cs" />
     <Compile Include="View\Converters\IdToImageConverter.cs" />
     <Compile Include="View\Converters\TypeListToString.cs" />
     <Compile Include="View\DetailPage.xaml.cs">
       <DependentUpon>DetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\OverviewPage.xaml.cs">
-      <DependentUpon>OverviewPage.xaml</DependentUpon>
+    <Compile Include="View\OverviewApiPage.xaml.cs">
+      <DependentUpon>OverviewApiPage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -123,7 +125,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\OverviewPage.xaml">
+    <Page Include="View\OverviewApiPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -18,9 +18,9 @@ namespace Project.View
     /// <summary>
     /// Interaction logic for OverviewPage.xaml
     /// </summary>
-    public partial class OverviewPage : Page
+    public partial class OverviewApiPage : Page
     {
-        public OverviewPage()
+        public OverviewApiPage()
         {
             InitializeComponent();
         }

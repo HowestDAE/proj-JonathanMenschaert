@@ -1,16 +1,15 @@
-﻿using Project.Model;
+﻿using Newtonsoft.Json.Linq;
+using Project.Model;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 
 namespace Project.Repository
 {
-    public class CardRepository
+    public class CardApiRepository : ICardRepository
     {
 
         public static List<CardType> CardTypes { get; private set; }
@@ -45,20 +44,24 @@ namespace Project.Repository
             return null;
         }
 
-        public static List<BaseCard> GetCards()
+        public async Task<List<BaseCard>> LoadCardsAsync()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "Project.Resources.Data.cards.json";
-
-            List<BaseCard> cards = new List<BaseCard>();
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (HttpClient client = new HttpClient())
             {
-                using (var reader = new StreamReader(stream))
+                try
                 {
-                    string json = reader.ReadToEnd();
-                    JArray cardsObj = JArray.Parse(json);
-                    //cards = JsonConvert.DeserializeObject<List<BaseCard>>(json);
-                    foreach (var card in cardsObj)
+                    var endPoint = $"https://api.pokemontcg.io/v2/cards?pageSize=250&q=supertype:trainer";
+                    var response = await client.GetAsync(endPoint);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new HttpRequestException(response.ReasonPhrase);
+                    }
+                    string json = await response.Content.ReadAsStringAsync();
+                    JObject cardsObj = JObject.Parse(json);
+                    JToken cardArray = cardsObj.SelectToken("data");
+
+                    List<BaseCard> cardList = new List<BaseCard>();
+                    foreach(var card in cardArray)
                     {
                         string cardTypeClass = card.SelectToken("supertype").ToObject<string>();
                         Type cardType = GetCardType(cardTypeClass.Replace("é", "e")).ActualType;
@@ -101,11 +104,16 @@ namespace Project.Repository
                             }
                         }
 
-                        cards.Add(currentCard);
+                        cardList.Add(currentCard);
                     }
+                    return cardList;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
             }
-            return cards;
+            return null;
         }
     }
 }

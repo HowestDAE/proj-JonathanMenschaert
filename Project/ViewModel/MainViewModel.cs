@@ -31,7 +31,7 @@ namespace Project.ViewModel
             }
         }
 
-        public OverviewPage MainPage { get; private set; } = new OverviewPage();
+        public OverviewApiPage MainPage { get; private set; } = new OverviewApiPage();
         public DetailPage InfoPage { get; private set; } = new DetailPage();
 
         public MainViewModel()
@@ -43,9 +43,9 @@ namespace Project.ViewModel
 
         private void SwitchToDetailPage()
         {
-            if (CurrentPage is OverviewPage)
+            if (CurrentPage is OverviewApiPage)
             {
-                BaseCard selectedCard = (MainPage.DataContext as OverviewPageVM).SelectedCard;
+                BaseCard selectedCard = (MainPage.DataContext as OverviewPageApiVM).SelectedCard;
                 if (selectedCard == null)
                 {
                     return;
@@ -57,7 +57,7 @@ namespace Project.ViewModel
 
         private void SwitchToSearchPage()
         {
-            if (!(CurrentPage is OverviewPage))
+            if (!(CurrentPage is OverviewApiPage))
             {
                 CurrentPage = MainPage;
             }
