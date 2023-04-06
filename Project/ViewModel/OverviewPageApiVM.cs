@@ -12,6 +12,53 @@ namespace Project.ViewModel
 {
     public class OverviewPageApiVM : ObservableObject
     {
+        private int[] pageSizes = new int[] { 5, 10, 25, 50, 100, 150, 200, 250 };
+        public int[] PageSizes
+        {
+            get
+            {
+                return pageSizes;
+            }
+            private set
+            {
+                pageSizes = value;
+                OnPropertyChanged(nameof(PageSizes));
+            }
+        }
+
+        private int selectedPageSize = 250;
+        public int SelectedPageSize
+        {
+            get
+            {
+                return selectedPageSize;
+            }
+            set
+            {
+                selectedPageSize = value;
+                OnPropertyChanged(nameof(SelectedPageSize));
+            }
+        }
+
+        private int pageNr = 1;
+        public int PageNr
+        {
+            get
+            {
+                return pageNr;
+            }
+            set
+            {
+                if (value <= TotalPages)
+                {
+                    pageNr = value;                    
+                }
+                OnPropertyChanged(nameof(PageNr));
+                DecreasePageCommand.NotifyCanExecuteChanged();
+                IncreasePageCommand.NotifyCanExecuteChanged();
+            }
+        }
+
         private List<BaseCard> cards;
         public List<BaseCard> Cards 
         { 
@@ -111,12 +158,50 @@ namespace Project.ViewModel
 
         private readonly string anyWildCard = "Any";
 
+        private int totalPages = 1;
+        public int TotalPages 
+        { 
+            get
+            {
+                return totalPages;
+            }
+            private set
+            {
+                totalPages = value;
+                OnPropertyChanged(nameof(TotalPages));
+            }
+        }
+
         public RelayCommand SearchCommand { get; private set; }
+        public RelayCommand IncreasePageCommand { get; private set; }
+        public RelayCommand DecreasePageCommand { get; private set; }
 
         public OverviewPageApiVM()
         {
             SearchCommand = new RelayCommand(SearchCardsAsync);
+            IncreasePageCommand = new RelayCommand(IncreasePage, CanIncreasePage);
+            DecreasePageCommand = new RelayCommand(DecreasePage, CanDecreasePage);
             LoadComboBoxesAsync();         
+        }
+
+        private bool CanIncreasePage()
+        {
+            return pageNr < TotalPages;
+        }
+
+        private void IncreasePage()
+        {
+            ++PageNr;
+        }
+
+        private bool CanDecreasePage()
+        {
+            return PageNr > 1;
+        }
+
+        private void DecreasePage()
+        {
+            --PageNr;
         }
 
         private async void LoadComboBoxesAsync()
@@ -142,18 +227,24 @@ namespace Project.ViewModel
             {
                 searchQueries.Add($"types:\"{SelectedType}\"");
             }
+            string query = $"pageSize={SelectedPageSize}&page={PageNr}&";
 
 
-            string query = "q=";
+
+            query += "q=";
             foreach(string searchQuery in searchQueries)
             {
-                if (query.Length > 3) query += " ";
+                if (query.EndsWith("q=")) query += " ";
                 query += searchQuery;
             }
+
+            
 
             CardMessage = "Loading cards ...";
             Cards = null;
             Cards = await apiRepository.LoadCardsAsync(query);
+            OnPropertyChanged(nameof(PageNr));
+            TotalPages = (int)Math.Ceiling((float)apiRepository.TotalCards / SelectedPageSize);
             if (Cards.Count > 0)
             {
                 CardMessage = "";

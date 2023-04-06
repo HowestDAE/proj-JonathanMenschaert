@@ -13,6 +13,8 @@ namespace Project.Repository
     {
 
         public List<CardType> CardTypes { get; private set; }
+        public int TotalCards { get; private set; }
+
         public async Task<List<CardType>> LoadCardTypesAsync()
         {
             if (CardTypes != null) return CardTypes;
@@ -104,7 +106,7 @@ namespace Project.Repository
                     string json = await response.Content.ReadAsStringAsync();
                     JObject cardsObj = JObject.Parse(json);
                     JToken cardArray = cardsObj.SelectToken("data");
-
+                    TotalCards = cardsObj.SelectToken("totalCount").ToObject<int>();
                     List<BaseCard> cardList = new List<BaseCard>();
                     foreach(var card in cardArray)
                     {

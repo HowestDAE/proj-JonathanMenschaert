@@ -31,12 +31,12 @@ namespace Project.ViewModel
             }
         }
 
-        public OverviewApiPage MainPage { get; private set; } = new OverviewApiPage();
+        public OverviewApiPage SearchPage { get; private set; } = new OverviewApiPage();
         public DetailPage InfoPage { get; private set; } = new DetailPage();
 
         public MainViewModel()
         {
-            CurrentPage = MainPage;
+            CurrentPage = SearchPage;
             SwitchToDetailPageCommand = new RelayCommand(SwitchToDetailPage);
             SwitchToSearchPageCommand = new RelayCommand(SwitchToSearchPage);
         }
@@ -45,7 +45,7 @@ namespace Project.ViewModel
         {
             if (CurrentPage is OverviewApiPage)
             {
-                BaseCard selectedCard = (MainPage.DataContext as OverviewPageApiVM).SelectedCard;
+                BaseCard selectedCard = (SearchPage.DataContext as OverviewPageApiVM).SelectedCard;
                 if (selectedCard == null)
                 {
                     return;
@@ -59,7 +59,7 @@ namespace Project.ViewModel
         {
             if (!(CurrentPage is OverviewApiPage))
             {
-                CurrentPage = MainPage;
+                CurrentPage = SearchPage;
             }
         }
     }
