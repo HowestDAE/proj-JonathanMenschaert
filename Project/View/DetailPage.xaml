@@ -10,13 +10,14 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DetailPage"
-      Background="#545454">
+      Background="DarkGray">
     <Page.DataContext>
         <vm:DetailPageVM/>
     </Page.DataContext>
     <Page.Resources>
         <conv:IdToImageConverter x:Key="IdToImage"/>
         <conv:TypeListToString x:Key="TypeListToString"/>
+        <conv:EmptyStringToZeroConverter x:Key="EmptyStringToZero"/>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,7 +26,7 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <!-- Detail page image -->
-        <Grid Background="Gray">
+        <Grid Background="#540909">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="1*"/>
@@ -39,8 +40,7 @@
                 <RowDefinition Height="0.1*"/>
             </Grid.RowDefinitions>
             <Grid.Resources>
-                <SolidColorBrush x:Key="BorderColor" Color="red"/>
-
+                <SolidColorBrush x:Key="BorderColor" Color="#2B2D53"/>
             </Grid.Resources>
             <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="5" Grid.Column="1" Grid.Row="3">
                 <Grid>
@@ -57,7 +57,7 @@
 
         </Grid>
         <!-- Separator -->
-        <Rectangle Grid.Column="1" Fill="Gray"/>
+        <Rectangle Grid.Column="1" Fill="White"/>
         <!-- Information panel -->
 
         <ScrollViewer Grid.Column="2">
@@ -73,11 +73,11 @@
                     <system:Double x:Key="PropertyNameSize">18</system:Double>
                     <system:Double x:Key="PropertyValueSize">15</system:Double>
                     <system:Double x:Key="PropertyDescriptionSize">15</system:Double>
-                    <SolidColorBrush x:Key="BgColor" Color="#545454"/>
-                    <SolidColorBrush x:Key="HeaderColor" Color="Red"/>
-                    <SolidColorBrush x:Key="SubHeaderColor" Color="Blue"/>
-                    <SolidColorBrush x:Key="PropertyNameColor" Color="Yellow"/>
-                    <SolidColorBrush x:Key="PropertyValueColor" Color="Green"/>
+                    <SolidColorBrush x:Key="BgColor" Color="DarkGray"/>
+                    <SolidColorBrush x:Key="HeaderColor" Color="Black"/>
+                    <SolidColorBrush x:Key="SubHeaderColor" Color="#3A549F"/>
+                    <SolidColorBrush x:Key="PropertyNameColor" Color="#4C4C4C"/>
+                    <SolidColorBrush x:Key="PropertyValueColor" Color="#EFEFEF"/>
                 </Grid.Resources>
                 <Rectangle Grid.ColumnSpan="3" Fill="{StaticResource BgColor}"/>
                 <StackPanel Grid.Column="1">
@@ -216,7 +216,7 @@
                                     <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Cost: " Grid.Row="1" HorizontalAlignment="Left"/>
                                     <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Cost, Converter={StaticResource TypeListToString}}" Grid.Row="1" HorizontalAlignment="Right"/>
                                     <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Damage: " Grid.Row="2" HorizontalAlignment="Left"/>
-                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Damage}" Grid.Row="2" HorizontalAlignment="Right"/>
+                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Damage, Converter={StaticResource EmptyStringToZero}}" Grid.Row="2" HorizontalAlignment="Right"/>
                                     <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Description: " Grid.Row="3" HorizontalAlignment="Left"/>
                                     <TextBlock FontSize="{StaticResource PropertyDescriptionSize}" Margin="0 0 0 20" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Description}" Grid.Row="4" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow"/>
                                 </Grid>
