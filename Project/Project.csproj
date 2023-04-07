@@ -101,6 +101,7 @@
     <Compile Include="ViewModel\DetailPageVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\OverviewPageApiVM.cs" />
+    <Compile Include="ViewModel\OverviewPageLocalVM.cs" />
     <Compile Include="View\Converters\EmptyStringToZeroConverter.cs" />
     <Compile Include="View\Converters\IdToIconConverter.cs" />
     <Compile Include="View\Converters\IdToImageConverter.cs" />
@@ -110,6 +111,9 @@
     </Compile>
     <Compile Include="View\OverviewApiPage.xaml.cs">
       <DependentUpon>OverviewApiPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OverviewLocalPage.xaml.cs">
+      <DependentUpon>OverviewLocalPage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -128,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OverviewApiPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OverviewLocalPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

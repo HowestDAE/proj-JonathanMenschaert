@@ -18,6 +18,8 @@ namespace Project.ViewModel
         public RelayCommand SwitchToDetailPageCommand { get; private set; }
         public RelayCommand SwitchToSearchPageCommand { get; private set; }
 
+        public RelayCommand SwitchToCollectionPageCommand { get; private set; }
+
         public Page CurrentPage
         {
             get
@@ -32,6 +34,8 @@ namespace Project.ViewModel
         }
 
         public OverviewApiPage SearchPage { get; private set; } = new OverviewApiPage();
+
+        public OverviewLocalPage CollectionPage { get; private set; } = new OverviewLocalPage();
         public DetailPage InfoPage { get; private set; } = new DetailPage();
 
         public MainViewModel()
@@ -39,6 +43,7 @@ namespace Project.ViewModel
             CurrentPage = SearchPage;
             SwitchToDetailPageCommand = new RelayCommand(SwitchToDetailPage);
             SwitchToSearchPageCommand = new RelayCommand(SwitchToSearchPage);
+            SwitchToCollectionPageCommand = new RelayCommand(SwitchToCollectionPage);
         }
 
         private void SwitchToDetailPage()
@@ -60,6 +65,14 @@ namespace Project.ViewModel
             if (!(CurrentPage is OverviewApiPage))
             {
                 CurrentPage = SearchPage;
+            }
+        }
+
+        private void SwitchToCollectionPage()
+        {
+            if (!(CurrentPage is OverviewLocalPage))
+            {
+                CurrentPage = CollectionPage;
             }
         }
     }
