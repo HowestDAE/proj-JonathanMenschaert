@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
 
 namespace Project.Model
 {
-    public abstract class BaseCard
+    public abstract class BaseCard : ObservableObject
     {
         [JsonProperty(PropertyName = "Id")]
         public string Id { get; set; }
