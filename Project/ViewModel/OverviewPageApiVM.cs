@@ -183,6 +183,8 @@ namespace Project.ViewModel
             {
                 totalPages = value;
                 OnPropertyChanged(nameof(TotalPages));
+                IncreasePageCommand.NotifyCanExecuteChanged();
+                DecreasePageCommand.NotifyCanExecuteChanged();
             }
         }
 
