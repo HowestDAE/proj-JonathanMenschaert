@@ -16,7 +16,6 @@
     </Page.DataContext>
     <Page.Resources>
         <conv:IdToIconConverter x:Key="IdToIcon"/>
-        <SolidColorBrush x:Key="BorderColor" Color="#2B2D53"/>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -34,6 +33,7 @@
             <SolidColorBrush x:Key="BgColor" Color="#540909"/>
             <SolidColorBrush x:Key="FgColor" Color="#C4C4C4"/>
             <Thickness x:Key="SearchQueryMargin" Left="10" Right="10" Top="0" Bottom="0"/>
+            <SolidColorBrush x:Key="BorderColor" Color="#2B2D53"/>
         </Grid.Resources>
         <Border Grid.ColumnSpan="3" Grid.RowSpan="4" Background="{StaticResource BgColor}"/>
 
@@ -42,19 +42,18 @@
             <Border Background="{StaticResource FgColor}">
                 <Grid Height="90">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="0.75*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="1.2*"/>
+                        <RowDefinition Height="1.2*"/>
+                        <RowDefinition Height="1.2*"/>
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Card Type" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" Margin="{StaticResource SearchQueryMargin}"/>
@@ -88,7 +87,7 @@
                     <TextBlock Text="Card Name" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="3" Margin="{StaticResource SearchQueryMargin}"/>
                     <TextBox Margin="10 0" Grid.Column="3" Grid.Row="2" Text="{Binding CardName}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
                     <Button Grid.Column="4" Grid.RowSpan="2" Grid.Row="1" Command="{Binding SearchCommand}" Margin="{StaticResource SearchQueryMargin}">
-                        <TextBlock FontSize="15" Text="Search Cards"/>
+                        <TextBlock FontSize="13" Text="Search Cards"/>
                     </Button>
                 </Grid>
             </Border>
