@@ -86,7 +86,7 @@
                         </Button>
                     </Grid>
                     <TextBlock Text="Card Name" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="3" Margin="{StaticResource SearchQueryMargin}"/>
-                    <TextBox Margin="10 0" Grid.Column="3" Grid.Row="2" Text="this is local" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                    <TextBox Margin="10 0" Grid.Column="3" Grid.Row="2" Text="{Binding CardName}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
                     <Button Grid.Column="4" Grid.RowSpan="2" Grid.Row="1" Command="{Binding SearchCommand}" Margin="{StaticResource SearchQueryMargin}">
                         <TextBlock FontSize="15" Text="Search Cards"/>
                     </Button>

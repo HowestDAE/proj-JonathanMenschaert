@@ -89,11 +89,13 @@
     <Compile Include="Model\Ability.cs" />
     <Compile Include="Model\Attack.cs" />
     <Compile Include="Model\BaseCard.cs" />
+    <Compile Include="Model\CardRepository.cs" />
     <Compile Include="Model\CardType.cs" />
     <Compile Include="Model\EnergyCard.cs" />
     <Compile Include="Model\ICardRepository.cs" />
     <Compile Include="Model\IHasAttacks.cs" />
     <Compile Include="Model\IHasRules.cs" />
+    <Compile Include="Model\IHasType.cs" />
     <Compile Include="Model\PokemonCard.cs" />
     <Compile Include="Model\TrainerCard.cs" />
     <Compile Include="Repository\CardApiRepository.cs" />
@@ -164,6 +166,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <EmbeddedResource Include="Resources\Data\cards.json" />
+    <EmbeddedResource Include="Resources\Data\cardSubtypes.json" />
+    <EmbeddedResource Include="Resources\Data\cardTypes.json" />
+    <EmbeddedResource Include="Resources\Data\cardSupertypes.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
