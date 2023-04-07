@@ -51,6 +51,15 @@ namespace Project.Model
 
             }
 
+            if (currentCard is IHasType typeCard)
+            {
+                var typeToken = card.SelectToken("types");
+                if (typeToken != null)
+                {
+                    typeCard.Types = typeToken.ToObject<List<string>>();
+                }
+            }
+
             if (currentCard is IHasAttacks attackCard)
             {
                 var attacksToken = card.SelectToken("attacks");

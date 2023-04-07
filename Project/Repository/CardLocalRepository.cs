@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 
 namespace Project.Repository
 {
     public class CardLocalRepository : CardRepository
     {
+        private readonly string safePattern = "[a-zA-Z0-9é'&\\*\\s\\.]*";
         private List<BaseCard> cardList;
 
         public int TotalCards
@@ -25,7 +27,7 @@ namespace Project.Repository
                 }
                 return 0;
             }
-        }
+        }        
         
         protected override async Task<List<CardType>> LoadCardTypesAsync()
         {
@@ -66,11 +68,28 @@ namespace Project.Repository
             }
             else if (queryName.Equals("types"))
             {
-
+                if (item is IHasType typeCard)
+                {
+                    if (typeCard.Types == null)
+                    {
+                        return false;
+                    }
+                    return typeCard.Types.Contains(queryValue, StringComparer.OrdinalIgnoreCase);
+                }
             }
             else if (queryName.Equals("name"))
             {
+                if (!Regex.IsMatch(queryValue, $"^{safePattern}$"))
+                {
+                    return false;
+                }
 
+                string pattern = $"^{queryValue.Replace("*", safePattern)}$";
+                Regex cardRgx = new Regex(pattern, RegexOptions.IgnoreCase);
+                if (cardRgx.IsMatch(item.Name))
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -140,7 +159,6 @@ namespace Project.Repository
                     {
                         BaseCard currentCard = await PopulateCard(card);
                         cardList.Add(currentCard);
-
                     }
                 }
             }           
