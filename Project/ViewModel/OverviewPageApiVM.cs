@@ -129,6 +129,20 @@ namespace Project.ViewModel
             }
         }
 
+        private string cardName;
+        public string CardName
+        {
+            get
+            {
+                return cardName;
+            }
+            set
+            {
+                cardName = value;
+                OnPropertyChanged(nameof(CardName));
+            }
+        }
+
         private string cardMessage = "Select query to search cards";
         public string CardMessage 
         { 
@@ -178,11 +192,14 @@ namespace Project.ViewModel
 
         public OverviewPageApiVM()
         {
-            SearchCommand = new RelayCommand(SearchCardsAsync);
+            Cards = new List<BaseCard>();
+            SearchCommand = new RelayCommand(SearchCardsAsync, CanSearchCards);
             IncreasePageCommand = new RelayCommand(IncreasePage, CanIncreasePage);
             DecreasePageCommand = new RelayCommand(DecreasePage, CanDecreasePage);
             LoadComboBoxesAsync();         
         }
+
+
 
         private bool CanIncreasePage()
         {
@@ -214,6 +231,15 @@ namespace Project.ViewModel
             SelectedType = anyWildCard;
         }
 
+        private bool CanSearchCards()
+        {
+            if (Cards == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         private async void SearchCardsAsync()
         {
             List<string> searchQueries = new List<string>();            
@@ -227,25 +253,32 @@ namespace Project.ViewModel
             {
                 searchQueries.Add($"types:\"{SelectedType}\"");
             }
+
+            if (!string.IsNullOrEmpty(CardName))
+            {
+                searchQueries.Add($"name:\"{CardName}\"");
+            }
+
             string query = $"pageSize={SelectedPageSize}&page={PageNr}&";
 
 
-
-            query += "q=";
-            foreach(string searchQuery in searchQueries)
+            if (searchQueries.Count > 0)
             {
-                if (query.EndsWith("q=")) query += " ";
-                query += searchQuery;
-            }
-
-            
+                query += "q=";
+                foreach (string searchQuery in searchQueries)
+                {
+                    if (!query.EndsWith("q=")) query += " ";
+                    query += searchQuery;
+                }
+            }            
 
             CardMessage = "Loading cards ...";
             Cards = null;
+            SearchCommand.NotifyCanExecuteChanged();
             Cards = await apiRepository.LoadCardsAsync(query);
             OnPropertyChanged(nameof(PageNr));
             TotalPages = (int)Math.Ceiling((float)apiRepository.TotalCards / SelectedPageSize);
-            if (Cards.Count > 0)
+            if (Cards != null && Cards.Count > 0)
             {
                 CardMessage = "";
             }
@@ -253,6 +286,7 @@ namespace Project.ViewModel
             {
                 CardMessage = "No cards found! Try another search query.";
             }
+            SearchCommand.NotifyCanExecuteChanged();
         }
     }
 }
