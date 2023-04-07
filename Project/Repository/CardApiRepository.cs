@@ -9,13 +9,12 @@ using System.Threading.Tasks;
 
 namespace Project.Repository
 {
-    public class CardApiRepository : ICardRepository
+    public class CardApiRepository : CardRepository
     {
 
-        public List<CardType> CardTypes { get; private set; }
         public int TotalCards { get; private set; }
 
-        public async Task<List<CardType>> LoadCardTypesAsync()
+        protected override async Task<List<CardType>> LoadCardTypesAsync()
         {
             if (CardTypes != null) return CardTypes;
             using (HttpClient client = new HttpClient())
@@ -81,16 +80,6 @@ namespace Project.Repository
             return null;
         }
 
-        private async Task<CardType> GetCardType(string cardClass)
-        {
-            await LoadCardTypesAsync();
-            foreach (var cardType in CardTypes)
-            {
-                if (cardType.Class == cardClass) return cardType;
-            }
-            return null;
-        }
-
         public async Task<List<BaseCard>> LoadCardsAsync(string query)
         {
             using (HttpClient client = new HttpClient())
@@ -110,55 +99,7 @@ namespace Project.Repository
                     List<BaseCard> cardList = new List<BaseCard>();
                     foreach(var card in cardArray)
                     {
-                        string cardTypeClass = card.SelectToken("supertype").ToObject<string>();
-                        CardType cardType = await GetCardType(cardTypeClass);
-                        var currentCard = Activator.CreateInstance(cardType.ActualType) as BaseCard;
-                        currentCard.Id = card.SelectToken("id").ToObject<string>();
-                        currentCard.Name = card.SelectToken("name").ToObject<string>();
-                        currentCard.SuperType = cardTypeClass;
-
-                        var subTypeToken = card.SelectToken("subtypes");
-                        if (subTypeToken != null)
-                        {
-                            currentCard.SubTypes = subTypeToken.ToObject<List<string>>();
-                        }
-
-                        var energyCard = currentCard as EnergyCard;
-                        if (energyCard != null)
-                        {
-                            var rules = card.SelectToken("rules");
-                            if (rules != null)
-                            {
-                                energyCard.Rules = rules.ToObject<List<string>>();
-                            }
-                        }
-
-                        var trainerCard = currentCard as TrainerCard;
-                        if (trainerCard != null)
-                        {
-                            var rules = card.SelectToken("rules");
-                            if (rules != null)
-                            {
-                                trainerCard.Rules = rules.ToObject<List<string>>();
-                            }
-                        }
-
-                        var pokemonCard = currentCard as PokemonCard;
-                        if (pokemonCard != null)
-                        {
-                            var attacksToken = card.SelectToken("attacks");
-                            if (attacksToken != null)
-                            {
-                                pokemonCard.Attacks = attacksToken.ToObject<List<Attack>>();
-                            }
-
-                            var abilityToken = card.SelectToken("abilities");
-                            if (abilityToken != null)
-                            {
-                                pokemonCard.Abilities = abilityToken.ToObject<List<Ability>>();
-                            }
-                        }
-
+                        BaseCard currentCard = await PopulateCard(card);
                         cardList.Add(currentCard);
                     }
                     return cardList;
