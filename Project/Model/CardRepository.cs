@@ -15,7 +15,10 @@ namespace Project.Model
 
         protected async Task<CardType> GetCardTypeAsync(string cardClass)
         {
-            await LoadCardTypesAsync();
+            if (CardTypes == null)
+            {
+                await LoadCardTypesAsync();
+            }
             foreach (var cardType in CardTypes)
             {
                 if (cardType.Class == cardClass) return cardType;

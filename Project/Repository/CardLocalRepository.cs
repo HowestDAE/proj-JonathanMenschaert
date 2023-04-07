@@ -29,24 +29,27 @@ namespace Project.Repository
         
         protected override async Task<List<CardType>> LoadCardTypesAsync()
         {
-            CardTypes = new List<CardType>();
-
             await Task.Run(() =>
             {
-                CardTypes.Add(new CardType()
-                {
-                    Class = "Energy"
-                });
+                CardTypes = new List<CardType>();
 
-                CardTypes.Add(new CardType()
+                var assembly = Assembly.GetExecutingAssembly();
+                var resourceName = $"Project.Resources.Data.cardSupertypes.json";
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
                 {
-                    Class = "Pokémon"
-                });
+                    using (var reader = new StreamReader(stream))
+                    {
+                        string json = reader.ReadToEnd();
+                        JArray superTypes = JArray.Parse(json);
 
-                CardTypes.Add(new CardType()
-                {
-                    Class = "Trainer"
-                });
+                        foreach (var superType in superTypes)
+                        {
+                            CardType cardType = new CardType();
+                            cardType.Class = superType.ToObject<string>();
+                            CardTypes.Add(cardType);
+                        }
+                    }
+                }
             });
             return CardTypes;
         }

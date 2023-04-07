@@ -16,7 +16,6 @@ namespace Project.Repository
 
         protected override async Task<List<CardType>> LoadCardTypesAsync()
         {
-            if (CardTypes != null) return CardTypes;
             using (HttpClient client = new HttpClient())
             {
                 try
