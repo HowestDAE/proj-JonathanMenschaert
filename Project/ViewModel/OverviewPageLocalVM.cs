@@ -280,7 +280,11 @@ namespace Project.ViewModel
             SearchCommand.NotifyCanExecuteChanged();
             Cards = await localRepository.LoadCardsAsync(query);
             OnPropertyChanged(nameof(PageNr));
-            TotalPages = (int)Math.Ceiling((float)localRepository.TotalCards / SelectedPageSize);
+            TotalPages = Math.Max((int)Math.Ceiling((float)localRepository.TotalCards / SelectedPageSize), 1);
+            if (PageNr > TotalPages)
+            {
+                PageNr = 1;
+            }
             if (Cards != null && Cards.Count > 0)
             {
                 CardMessage = "";

@@ -124,14 +124,11 @@ namespace Project.Repository
                 int startIdx = pageSize * (pageNr - 1);
                 if (startIdx >= filteredCards.Count)
                 {
-                    TotalCards = 1;
-                    filteredCards = new List<BaseCard>();
+                    startIdx = 0;
                 }
-                else
-                {
-                    TotalCards = filteredCards.Count;
-                    filteredCards = filteredCards.GetRange(startIdx, Math.Min(pageSize, filteredCards.Count - startIdx));
-                }
+                
+                TotalCards = filteredCards.Count;
+                filteredCards = filteredCards.GetRange(startIdx, Math.Min(pageSize, filteredCards.Count - startIdx));                
 
             });
             
