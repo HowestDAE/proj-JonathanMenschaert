@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Numerics;
 
 namespace Project.Repository
 {
@@ -17,17 +18,8 @@ namespace Project.Repository
         private readonly string safePattern = "[a-zA-Z0-9é'&\\*\\s\\.]*";
         private List<BaseCard> cardList;
 
-        public int TotalCards
-        {
-            get
-            {
-                if (cardList != null)
-                {
-                    return cardList.Count;
-                }
-                return 0;
-            }
-        }        
+        
+        public int TotalCards { get; private set; }    
         
         protected override async Task<List<CardType>> LoadCardTypesAsync()
         {
@@ -104,7 +96,17 @@ namespace Project.Repository
             await Task.Run(() =>
             {
                 List<string> queries = query.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                
+
+                if (queries.Count == 0)
+                {
+                    return;
+                }
+
+                int pageSize = GetValueFromQuery(queries[0]);
+                queries.RemoveAt(0);
+                int pageNr = GetValueFromQuery(queries[0]);
+                queries.RemoveAt(0);
+
                 filteredCards = cardList.Where(item =>
                 {
                     bool containsValue = true;
@@ -118,8 +120,39 @@ namespace Project.Repository
                     }
                     return containsValue;
                 }).ToList();
+
+                int startIdx = pageSize * (pageNr - 1);
+                if (startIdx >= filteredCards.Count)
+                {
+                    TotalCards = 1;
+                    filteredCards = new List<BaseCard>();
+                }
+                else
+                {
+                    TotalCards = filteredCards.Count;
+                    filteredCards = filteredCards.GetRange(startIdx, Math.Min(pageSize, filteredCards.Count - startIdx));
+                }
+
             });
+            
             return filteredCards;
+        }
+
+        private int GetValueFromQuery(string query)
+        {
+            Regex validator = new Regex("^.+=.+$");
+            if (!validator.IsMatch(query))
+            {
+                return 0;
+            }
+            List<string> queryValue = query.Split(new char[] {'='}).ToList();
+
+            int intValue = 0;
+            if (int.TryParse(queryValue[1], out intValue))
+            {
+                return intValue;
+            }
+            return 0;
         }
 
         public async Task<List<string>> LoadPropertyAsync(string property)

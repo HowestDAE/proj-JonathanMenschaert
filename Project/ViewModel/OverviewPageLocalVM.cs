@@ -263,14 +263,14 @@ namespace Project.ViewModel
                 searchQueries.Add($"name={CardName}");
             }
 
-            string query = ""; // $"pageSize={SelectedPageSize}&page={PageNr}&";
+            string query = $"pageSize={SelectedPageSize},page={PageNr}";
 
 
             if (searchQueries.Count > 0)
             {
                 foreach (string searchQuery in searchQueries)
                 {
-                    if (query.Length > 0) query += " ";
+                    if (query.Length > 0) query += ",";
                     query += searchQuery;
                 }
             }
