@@ -143,7 +143,7 @@ namespace Project.ViewModel
             }
         }
 
-        private string cardMessage = "Select query to search cards";
+        private string cardMessage = "Select query to search cards locally";
         public string CardMessage
         {
             get

@@ -22,9 +22,12 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.75*"/>
-            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <SolidColorBrush x:Key="BorderColor" Color="#2B2D53"/>
+        </Grid.Resources>
         <!-- Detail page image -->
         <Grid Background="#540909">
             <Grid.ColumnDefinitions>
@@ -39,9 +42,6 @@
                 <RowDefinition Height="0.5*"/>
                 <RowDefinition Height="0.1*"/>
             </Grid.RowDefinitions>
-            <Grid.Resources>
-                <SolidColorBrush x:Key="BorderColor" Color="#2B2D53"/>
-            </Grid.Resources>
             <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="5" Grid.Column="1" Grid.Row="3">
                 <Grid>
                     <Rectangle Fill="DarkGray"/>
@@ -57,7 +57,7 @@
 
         </Grid>
         <!-- Separator -->
-        <Rectangle Grid.Column="1" Fill="White"/>
+        <Rectangle Grid.Column="1" Fill="{StaticResource BorderColor}"/>
         <!-- Information panel -->
 
         <ScrollViewer Grid.Column="2">
@@ -68,23 +68,24 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.Resources>
-                    <system:Double x:Key="HeaderSize">30</system:Double>
+                    <system:Double x:Key="HeaderSize">28</system:Double>
                     <system:Double x:Key="SubHeaderSize">20</system:Double>
-                    <system:Double x:Key="PropertyNameSize">18</system:Double>
+                    <system:Double x:Key="PropertyNameSize">15</system:Double>
                     <system:Double x:Key="PropertyValueSize">15</system:Double>
-                    <system:Double x:Key="PropertyDescriptionSize">15</system:Double>
+                    <system:Double x:Key="PropertyDescriptionSize">13</system:Double>
                     <SolidColorBrush x:Key="BgColor" Color="DarkGray"/>
-                    <SolidColorBrush x:Key="HeaderColor" Color="Black"/>
-                    <SolidColorBrush x:Key="SubHeaderColor" Color="#3A549F"/>
-                    <SolidColorBrush x:Key="PropertyNameColor" Color="#4C4C4C"/>
-                    <SolidColorBrush x:Key="PropertyValueColor" Color="#EFEFEF"/>
+                    <SolidColorBrush x:Key="HeaderColor" Color="#2B2D53"/>
+                    <SolidColorBrush x:Key="SubHeaderColor" Color="#2B2D53"/>
+                    <SolidColorBrush x:Key="PropertyNameColor" Color="Black"/>
+                    <SolidColorBrush x:Key="PropertyValueColor" Color="#4C4C4C"/>
+                    <SolidColorBrush x:Key="UnderlineColor" Color="#540909"/>
                 </Grid.Resources>
                 <Rectangle Grid.ColumnSpan="3" Fill="{StaticResource BgColor}"/>
                 <StackPanel Grid.Column="1">
                     <!-- General information -->
                     <TextBlock Margin="0 50 0 0" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center" Foreground="{StaticResource HeaderColor}" 
                            Text="General Information" />
-                    <Rectangle Margin="0 0 0 20" Height="1" Fill="{StaticResource HeaderColor}"/>
+                    <Rectangle Margin="0 0 0 20" Height="3" Fill="{StaticResource UnderlineColor}"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -163,7 +164,7 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <Rectangle Margin="0 0 0 20" Grid.Column="1" Height="1" Fill="{StaticResource HeaderColor}">
+                    <Rectangle Margin="0 0 0 20" Grid.Column="1" Height="3" Fill="{StaticResource UnderlineColor}">
                         <Rectangle.Style>
                             <Style TargetType="Rectangle">
                                 <Setter Property="Visibility" Value="Visible"/>
@@ -188,10 +189,10 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock FontSize="{StaticResource SubHeaderSize}" Margin="0 0 0 10" Foreground="{StaticResource SubHeaderColor}" Text="{Binding AbilityName}"/>
+                                    <TextBlock FontWeight="Bold" FontSize="{StaticResource SubHeaderSize}" Margin="0 0 0 10" Foreground="{StaticResource SubHeaderColor}" Text="{Binding AbilityName}"/>
                                     <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Type: " Grid.Row="1" HorizontalAlignment="Left"/>
                                     <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Type}" Grid.Row="1" HorizontalAlignment="Right"/>
-                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Description: " Grid.Row="3" HorizontalAlignment="Left"/>
+                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Description: " Grid.Row="3" HorizontalAlignment="Left" Margin="0 0 0 5"/>
                                     <TextBlock FontSize="{StaticResource PropertyDescriptionSize}" Margin="0 0 0 20" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Description}" Grid.Row="4" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow"/>
                                 </Grid>
                             </DataTemplate>
@@ -211,7 +212,7 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <Rectangle Margin="0 0 0 20" Grid.Column="1" Height="1" Fill="{StaticResource HeaderColor}">
+                    <Rectangle Margin="0 0 0 20" Grid.Column="1" Height="3" Fill="{StaticResource UnderlineColor}">
                         <Rectangle.Style>
                             <Style TargetType="Rectangle">
                                 <Setter Property="Visibility" Value="Visible"/>
@@ -236,12 +237,12 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock FontSize="{StaticResource SubHeaderSize}" Margin="0 0 0 10" Foreground="{StaticResource SubHeaderColor}" Text="{Binding AttackName}"/>
+                                    <TextBlock FontWeight="Bold" FontSize="{StaticResource SubHeaderSize}" Margin="0 0 0 10" Foreground="{StaticResource SubHeaderColor}" Text="{Binding AttackName}"/>
                                     <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Cost: " Grid.Row="1" HorizontalAlignment="Left"/>
                                     <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Cost, Converter={StaticResource TypeListToString}}" Grid.Row="1" HorizontalAlignment="Right"/>
                                     <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Damage: " Grid.Row="2" HorizontalAlignment="Left"/>
                                     <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Damage, Converter={StaticResource EmptyStringToZero}}" Grid.Row="2" HorizontalAlignment="Right"/>
-                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Description: " Grid.Row="3" HorizontalAlignment="Left">
+                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Description: " Grid.Row="3" HorizontalAlignment="Left" Margin="0 0 0 5">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -275,7 +276,7 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <Rectangle Margin="0 0 0 20" Grid.Column="1" Height="1" Fill="{StaticResource HeaderColor}">
+                    <Rectangle Margin="0 0 0 20" Grid.Column="1" Height="3" Fill="{StaticResource UnderlineColor}">
                         <Rectangle.Style>
                             <Style TargetType="Rectangle">
                                 <Setter Property="Visibility" Value="Visible"/>
@@ -297,7 +298,7 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Margin="0 0 0 10" Foreground="{StaticResource PropertyNameColor}" Text="Rule: " Grid.Row="0" HorizontalAlignment="Left"/>
+                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Margin="0 0 0 10" Foreground="{StaticResource PropertyNameColor}" Text="Rule: " Grid.Row="0" HorizontalAlignment="Left" Margin="0 0 0 5"/>
                                     <TextBlock FontSize="{StaticResource PropertyDescriptionSize}" Margin="0 0 0 20" Foreground="{StaticResource PropertyValueColor}" Text="{Binding}" Grid.Row="1" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow"/>
                                 </Grid>
                             </DataTemplate>
