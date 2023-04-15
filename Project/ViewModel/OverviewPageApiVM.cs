@@ -244,6 +244,7 @@ namespace Project.ViewModel
 
         private async void SearchCardsAsync()
         {
+            //Build search query
             List<string> searchQueries = new List<string>();            
 
             if (SelectedSubType != null && SelectedSubType != anyWildCard)
@@ -274,6 +275,7 @@ namespace Project.ViewModel
                 }
             }            
 
+            //Load cards
             CardMessage = "Loading cards ...";
             Cards = null;
             SearchCommand.NotifyCanExecuteChanged();

@@ -31,31 +31,43 @@
             <Thickness x:Key="TextButtonMargin" Left="0" Right="0" Top="75" Bottom="5"/>
             <Thickness x:Key="ImageButtonMargin" Left="0" Right="0" Top="10" Bottom="20"/>
         </Grid.Resources>
+        <!-- Left Sidebar with icons -->
         <Border Grid.Row ="0" Background="{StaticResource TopbarColor}" Grid.ColumnSpan="3"/>
-        <Border Grid.Row ="2" Background="{StaticResource TopbarColor}" Grid.ColumnSpan="3"/>
         <Border Grid.Row="1" Background="{StaticResource SidebarColor}">
             <StackPanel Orientation="Vertical">
                 <Button Background="{Binding SearchColor}" BorderThickness="0" Command="{Binding SwitchToSearchPageCommand}">
                     <Grid>
-                        <Image Source="pack://Application:,,,/Resources/Icons/searchIcon.png" Width="40" Margin="{StaticResource ImageButtonMargin}"/>
-                        <TextBlock Margin="{StaticResource TextButtonMargin}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Search" Foreground="White"/>
+                        <Image Source="pack://Application:,,,/Resources/Icons/searchIcon.png" Width="40" 
+                               Margin="{StaticResource ImageButtonMargin}"/>
+                        <TextBlock Margin="{StaticResource TextButtonMargin}" VerticalAlignment="Bottom" 
+                                   HorizontalAlignment="Center" Text="Search" Foreground="White"/>
                     </Grid>
                 </Button>
                 <Button Background="{Binding CollectionColor}" BorderThickness="0" Command="{Binding SwitchToCollectionPageCommand}">
                     <Grid>
-                        <Image Source="pack://Application:,,,/Resources/Icons/openBookIcon.png" Width="40" Margin="{StaticResource ImageButtonMargin}"/>
-                        <TextBlock Margin="{StaticResource TextButtonMargin}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Collection" Foreground="White"/>
+                        <Image Source="pack://Application:,,,/Resources/Icons/openBookIcon.png" Width="40" 
+                               Margin="{StaticResource ImageButtonMargin}"/>
+                        <TextBlock Margin="{StaticResource TextButtonMargin}" VerticalAlignment="Bottom" 
+                                   HorizontalAlignment="Center" Text="Collection" Foreground="White"/>
                     </Grid>
                 </Button>
                 <Button Background="{Binding InfoColor}" BorderThickness="0" Command="{Binding SwitchToDetailPageCommand}">
                     <Grid>
-                        <Image Source="pack://Application:,,,/Resources/Icons/infoIcon.png" Width="40" Margin="{StaticResource ImageButtonMargin}"/>
-                        <TextBlock Margin="{StaticResource TextButtonMargin}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Card Info" Foreground="White"/>
+                        <Image Source="pack://Application:,,,/Resources/Icons/infoIcon.png" Width="40" 
+                               Margin="{StaticResource ImageButtonMargin}"/>
+                        <TextBlock Margin="{StaticResource TextButtonMargin}" VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+                                   Text="Card Info" Foreground="White"/>
                     </Grid>
                 </Button>
             </StackPanel>
         </Border>
+        <!-- Bottom Sidebar -->
+        <Border Grid.Row ="2" Background="{StaticResource TopbarColor}" Grid.ColumnSpan="3"/>
+        
+        <!-- Page Frame-->
         <Frame Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
+        
+        <!-- Right bar -->
         <Border Grid.Row ="1" Background="#262626" Grid.Column = "2"/>
     </Grid>
 </Window>

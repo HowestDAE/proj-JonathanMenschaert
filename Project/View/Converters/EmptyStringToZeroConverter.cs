@@ -12,6 +12,7 @@ namespace Project.View.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            //Returns "0" if the string is empty or null, otherwise the Damage value is not displayed
             string strVal = value.ToString();
             if (string.IsNullOrEmpty(strVal))
             {

@@ -13,6 +13,7 @@ namespace Project.View.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            //Convert pokemon id to card logo
             string id = value.ToString();
             return new Uri($"https://images.pokemontcg.io/{id.Substring(0, id.IndexOf("-"))}/logo.png");
         }

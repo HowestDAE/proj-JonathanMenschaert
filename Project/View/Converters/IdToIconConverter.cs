@@ -12,6 +12,7 @@ namespace Project.View.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            //Convert the pokemon id to the symbol image url
             string id = value.ToString();
             return new Uri($"https://images.pokemontcg.io/{id.Substring(0, id.IndexOf("-"))}/symbol.png");
         }

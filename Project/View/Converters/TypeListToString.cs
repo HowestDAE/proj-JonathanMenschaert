@@ -12,6 +12,7 @@ namespace Project.View.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            //Count how many of each type there is, then convert it to #x[type] format
             List<string> typeList = (value as List<string>);
             if (typeList == null)
             {

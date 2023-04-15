@@ -36,7 +36,10 @@
         </Grid.Resources>
         <Border Grid.ColumnSpan="3" Grid.RowSpan="4" Background="{StaticResource BgColor}"/>
         
+        <!-- Title Image -->
         <Image Margin="0 10" Grid.Column="1" Source="https://images.pokemontcg.io/base1/logo.png" />
+        
+        <!-- Search box -->
         <Border Grid.Column="1" Grid.Row="1" BorderThickness="5" BorderBrush="{StaticResource BorderColor}">
             <Border Background="{StaticResource FgColor}">
                 <Grid Height="90">
@@ -55,18 +58,30 @@
                         <RowDefinition Height="1.2*"/>
                 
                     </Grid.RowDefinitions>
-
-                    <TextBlock Text="Card Type" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" Margin="{StaticResource SearchQueryMargin}"/>
-                    <ComboBox SelectedItem="{Binding SelectedType}" ItemsSource="{Binding Types}" Grid.Row="1" Grid.Column="1" Margin="{StaticResource SearchQueryMargin}"
+                    
+                    <!-- Select Type -->
+                    <TextBlock Text="Card Type" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" 
+                               Margin="{StaticResource SearchQueryMargin}"/>
+                    <ComboBox SelectedItem="{Binding SelectedType}" ItemsSource="{Binding Types}" Grid.Row="1" Grid.Column="1" 
+                              Margin="{StaticResource SearchQueryMargin}"
                           VerticalContentAlignment="Top"/>
-                    <TextBlock Text="Card Subtype" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="2" Margin="{StaticResource SearchQueryMargin}"/>
-                    <ComboBox SelectedItem="{Binding SelectedSubType}" ItemsSource="{Binding SubTypes}" Grid.Row="1" Grid.Column="2" Margin="{StaticResource SearchQueryMargin}"
-                         VerticalContentAlignment="Top"/>
-
-                    <TextBlock Text="Page Size" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" Margin="{StaticResource SearchQueryMargin}"/>
-                    <ComboBox Height="30" SelectedItem="{Binding SelectedPageSize}" ItemsSource="{Binding PageSizes}" Grid.Row="3" Grid.Column="1" Margin="{StaticResource SearchQueryMargin}"
+                    
+                    <!-- Select Subtype-->
+                    <TextBlock Text="Card Subtype" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="2" 
+                               Margin="{StaticResource SearchQueryMargin}"/>
+                    <ComboBox SelectedItem="{Binding SelectedSubType}" ItemsSource="{Binding SubTypes}" Grid.Row="1" Grid.Column="2" 
+                              Margin="{StaticResource SearchQueryMargin}" VerticalContentAlignment="Top"/>
+                    
+                    <!-- Select Page size-->
+                    <TextBlock Text="Page Size" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" 
+                               Margin="{StaticResource SearchQueryMargin}"/>
+                    <ComboBox Height="30" SelectedItem="{Binding SelectedPageSize}" ItemsSource="{Binding PageSizes}" Grid.Row="3" 
+                              Grid.Column="1" Margin="{StaticResource SearchQueryMargin}"
                           VerticalContentAlignment="Top"/>
-                    <TextBlock Text="Page Number" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="2" Margin="{StaticResource SearchQueryMargin}"/>
+                    
+                    <!-- Select page number -->
+                    <TextBlock Text="Page Number" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="2" 
+                               Margin="{StaticResource SearchQueryMargin}"/>
                     <Grid Grid.Row="3" Grid.Column="2" Margin="{StaticResource SearchQueryMargin}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*"/>
@@ -77,21 +92,27 @@
                         <Button Grid.Column="0" Command="{Binding DecreasePageCommand}">
                             <TextBlock Text="-"/>
                         </Button>
-                        <TextBox Margin="2 0" Grid.Column="1" Text="{Binding PageNr}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                        <TextBox Margin="2 0" Grid.Column="1" Text="{Binding PageNr}" HorizontalContentAlignment="Center" 
+                                 VerticalContentAlignment="Center"/>
                         <TextBlock Grid.Column="2" VerticalAlignment="Center" Text=" / "/>
                         <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding TotalPages}"/>
                         <Button Grid.Column="3" Command="{Binding IncreasePageCommand}">
                             <TextBlock Text="+"/>
                         </Button>
                     </Grid>
-                    <TextBlock Text="Card Name" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="3" Margin="{StaticResource SearchQueryMargin}"/>
-                    <TextBox Margin="10 0" Grid.Column="3" Grid.Row="2" Text="{Binding CardName}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-                    <Button Grid.Column="4" Grid.RowSpan="2" Grid.Row="1" Command="{Binding SearchCommand}" Margin="{StaticResource SearchQueryMargin}">
+                    <TextBlock Text="Card Name" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="3" 
+                               Margin="{StaticResource SearchQueryMargin}"/>
+                    <TextBox Margin="10 0" Grid.Column="3" Grid.Row="2" Text="{Binding CardName}" HorizontalContentAlignment="Left" 
+                             VerticalContentAlignment="Center"/>
+                    <Button Grid.Column="4" Grid.RowSpan="2" Grid.Row="1" Command="{Binding SearchCommand}" 
+                            Margin="{StaticResource SearchQueryMargin}">
                         <TextBlock FontSize="13" Text="Search Cards"/>
                     </Button>
                 </Grid>
             </Border>
         </Border>
+        
+        <!-- Card List -->
         <Border Grid.Column="1" Grid.Row="3" Margin="0 0 0 15" BorderThickness="5" BorderBrush="{StaticResource BorderColor}">
             <Grid>    
                 <ListBox ItemsSource="{Binding Cards}" 
@@ -102,7 +123,8 @@
                         <DataTemplate>
                             <Grid Width="150" >
                                 <Image Source="{Binding SmallImage}" Width="auto" Height="auto" Margin="5,10" HorizontalAlignment="Center"/>
-                                <Image Source="{Binding Id, Converter={StaticResource IdToIcon}}" Width="30" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0"/>
+                                <Image Source="{Binding Id, Converter={StaticResource IdToIcon}}" Width="30" Height="auto" 
+                                       VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

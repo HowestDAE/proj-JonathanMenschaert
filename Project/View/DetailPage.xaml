@@ -83,7 +83,8 @@
                 <Rectangle Grid.ColumnSpan="3" Fill="{StaticResource BgColor}"/>
                 <StackPanel Grid.Column="1">
                     <!-- General information -->
-                    <TextBlock Margin="0 50 0 0" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center" Foreground="{StaticResource HeaderColor}" 
+                    <TextBlock Margin="0 50 0 0" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center" 
+                               Foreground="{StaticResource HeaderColor}" 
                            Text="General Information" />
                     <Rectangle Margin="0 0 0 20" Height="3" Fill="{StaticResource UnderlineColor}"/>
                     <Grid>
@@ -97,9 +98,13 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock FontSize="{StaticResource PropertyNameSize}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Foreground="{StaticResource PropertyNameColor}" Text="Name:"/>
-                        <TextBlock FontSize="{StaticResource PropertyNameSize}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Foreground="{StaticResource PropertyNameColor}" Text="Classification:"/>
-                        <TextBlock FontSize="{StaticResource PropertyNameSize}" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource PropertyNameColor}" Text="Subtypes:">
+                        <!-- General property names -->
+                        <TextBlock FontSize="{StaticResource PropertyNameSize}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" 
+                                   Foreground="{StaticResource PropertyNameColor}" Text="Name:"/>
+                        <TextBlock FontSize="{StaticResource PropertyNameSize}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" 
+                                   Foreground="{StaticResource PropertyNameColor}" Text="Classification:"/>
+                        <TextBlock FontSize="{StaticResource PropertyNameSize}" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" 
+                                   HorizontalAlignment="Left" Foreground="{StaticResource PropertyNameColor}" Text="Subtypes:">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -111,7 +116,8 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock FontSize="{StaticResource PropertyNameSize}" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource PropertyNameColor}" Text="Types:">
+                        <TextBlock FontSize="{StaticResource PropertyNameSize}" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" 
+                                   HorizontalAlignment="Left" Foreground="{StaticResource PropertyNameColor}" Text="Types:">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -123,6 +129,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
+                        <!-- General Property values -->
                         <TextBlock FontSize="{StaticResource PropertyValueSize}" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" 
                                Foreground="{StaticResource PropertyValueColor}" Text="{Binding CurrentCard.Name}"/>
                         <TextBlock FontSize="{StaticResource PropertyValueSize}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" 
@@ -134,25 +141,31 @@
                              HorizontalContentAlignment="Right" IsHitTestVisible="False">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" Text="{Binding}"/>
+                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" 
+                                               Text="{Binding}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
 
                         <!-- Type list -->
-                        <ListBox x:Name="typeList" ItemsSource="{Binding CurrentCard.Types}" Grid.Column="2" Grid.Row="3"
-                     Background="{StaticResource BgColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0"
-                             HorizontalContentAlignment="Right" IsHitTestVisible="False">
+                        <ListBox x:Name="typeList" ItemsSource="{Binding CurrentCard.Types}" 
+                                Grid.Column="2" Grid.Row="3"
+                                Background="{StaticResource BgColor}" 
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0"
+                                HorizontalContentAlignment="Right" IsHitTestVisible="False">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" Text="{Binding}"/>
+                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" 
+                                               Foreground="{StaticResource PropertyValueColor}"
+                                               Text="{Binding}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </Grid>               
 
                     <!-- Ability list -->
-                    <TextBlock Margin="0 50 0 0" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center" Foreground="{StaticResource HeaderColor}" Text="Abilities">
+                    <TextBlock Margin="0 50 0 0" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center" 
+                               Foreground="{StaticResource HeaderColor}" Text="Abilities">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Visibility" Value="Visible"/>
@@ -189,18 +202,27 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock FontWeight="Bold" FontSize="{StaticResource SubHeaderSize}" Margin="0 0 0 10" Foreground="{StaticResource SubHeaderColor}" Text="{Binding AbilityName}"/>
-                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Type: " Grid.Row="1" HorizontalAlignment="Left"/>
-                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Type}" Grid.Row="1" HorizontalAlignment="Right"/>
-                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Description: " Grid.Row="3" HorizontalAlignment="Left" Margin="0 0 0 5"/>
-                                    <TextBlock FontSize="{StaticResource PropertyDescriptionSize}" Margin="0 0 0 20" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Description}" Grid.Row="4" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Ability Property values and names -->
+                                    <TextBlock FontWeight="Bold" FontSize="{StaticResource SubHeaderSize}" Margin="0 0 0 10" 
+                                               Foreground="{StaticResource SubHeaderColor}" Text="{Binding AbilityName}"/>
+                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" 
+                                               Text="Type: " Grid.Row="1" HorizontalAlignment="Left"/>
+                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" 
+                                               Text="{Binding Type}" Grid.Row="1" HorizontalAlignment="Right"/>
+                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" 
+                                               Text="Description: " Grid.Row="3" HorizontalAlignment="Left" Margin="0 0 0 5"/>
+                                    <TextBlock FontSize="{StaticResource PropertyDescriptionSize}" Margin="0 0 0 20" 
+                                               Foreground="{StaticResource PropertyValueColor}" 
+                                               Text="{Binding Description}" Grid.Row="4" HorizontalAlignment="Left" 
+                                               TextWrapping="WrapWithOverflow"/>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
 
                     <!-- Attack List -->
-                    <TextBlock Margin="0 50 0 0" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center" Foreground="{StaticResource HeaderColor}" Text="Attacks">
+                    <TextBlock Margin="0 50 0 0" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center" 
+                               Foreground="{StaticResource HeaderColor}" Text="Attacks">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Visibility" Value="Visible"/>
@@ -237,12 +259,21 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock FontWeight="Bold" FontSize="{StaticResource SubHeaderSize}" Margin="0 0 0 10" Foreground="{StaticResource SubHeaderColor}" Text="{Binding AttackName}"/>
-                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Cost: " Grid.Row="1" HorizontalAlignment="Left"/>
-                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Cost, Converter={StaticResource TypeListToString}}" Grid.Row="1" HorizontalAlignment="Right"/>
-                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Damage: " Grid.Row="2" HorizontalAlignment="Left"/>
-                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Damage, Converter={StaticResource EmptyStringToZero}}" Grid.Row="2" HorizontalAlignment="Right"/>
-                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" Text="Description: " Grid.Row="3" HorizontalAlignment="Left" Margin="0 0 0 5">
+                                    <!-- Attack Property names and values -->
+                                    <TextBlock FontWeight="Bold" FontSize="{StaticResource SubHeaderSize}" Margin="0 0 0 10" 
+                                               Foreground="{StaticResource SubHeaderColor}" Text="{Binding AttackName}"/>
+                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" 
+                                               Text="Cost: " Grid.Row="1" HorizontalAlignment="Left"/>
+                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" 
+                                               Text="{Binding Cost, Converter={StaticResource TypeListToString}}" Grid.Row="1" 
+                                               HorizontalAlignment="Right"/>
+                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" 
+                                               Text="Damage: " Grid.Row="2" HorizontalAlignment="Left"/>
+                                    <TextBlock FontSize="{StaticResource PropertyValueSize}" Foreground="{StaticResource PropertyValueColor}" 
+                                               Text="{Binding Damage, Converter={StaticResource EmptyStringToZero}}" Grid.Row="2" 
+                                               HorizontalAlignment="Right"/>
+                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Foreground="{StaticResource PropertyNameColor}" 
+                                               Text="Description: " Grid.Row="3" HorizontalAlignment="Left" Margin="0 0 0 5">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -257,14 +288,17 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    <TextBlock x:Name="descriptionText" FontSize="{StaticResource PropertyDescriptionSize}" Margin="0 0 0 20" Foreground="{StaticResource PropertyValueColor}" Text="{Binding Description}" Grid.Row="4" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock x:Name="descriptionText" FontSize="{StaticResource PropertyDescriptionSize}" 
+                                               Margin="0 0 0 20" Foreground="{StaticResource PropertyValueColor}" 
+                                               Text="{Binding Description}" Grid.Row="4" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow"/>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
 
                     <!-- Rules List -->
-                    <TextBlock Margin="0 50 0 0" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center" Foreground="{StaticResource HeaderColor}" Text="Rules">
+                    <TextBlock Margin="0 50 0 0" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center" 
+                               Foreground="{StaticResource HeaderColor}" Text="Rules">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Visibility" Value="Visible"/>
@@ -289,8 +323,8 @@
                         </Rectangle.Style>
                     </Rectangle>
                     <ListBox x:Name="ruleList" ItemsSource="{Binding CurrentCard.Rules}" Grid.Row="2"
-                     Background="{StaticResource BgColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0"
-                             HorizontalContentAlignment="Stretch" IsHitTestVisible="False">
+                     Background="{StaticResource BgColor}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                             BorderThickness="0" HorizontalContentAlignment="Stretch" IsHitTestVisible="False">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -298,8 +332,14 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" Margin="0 0 0 10" Foreground="{StaticResource PropertyNameColor}" Text="Rule: " Grid.Row="0" HorizontalAlignment="Left" Margin="0 0 0 5"/>
-                                    <TextBlock FontSize="{StaticResource PropertyDescriptionSize}" Margin="0 0 0 20" Foreground="{StaticResource PropertyValueColor}" Text="{Binding}" Grid.Row="1" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Rules descriptions -->
+                                    <TextBlock FontSize="{StaticResource PropertyNameSize}" 
+                                               Margin="0 0 0 10" Foreground="{StaticResource PropertyNameColor}" 
+                                               Text="Rule: " Grid.Row="0" HorizontalAlignment="Left"/>
+                                    <TextBlock FontSize="{StaticResource PropertyDescriptionSize}" 
+                                               Margin="0 0 0 20" Foreground="{StaticResource PropertyValueColor}" 
+                                               Text="{Binding}" Grid.Row="1" HorizontalAlignment="Left" 
+                                               TextWrapping="WrapWithOverflow"/>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
