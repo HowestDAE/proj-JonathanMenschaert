@@ -21,6 +21,8 @@ The name field can contain the exact card name, but can also have a wildcard cha
 The detail page will give you more info on the card's stats, such as the classification. If the card has it, the attacks, abilities and rules will also be displayed.
 The card series logo is displayed under the card.
 
+![Detail Page 2](Media/DetailPage1.png)
+
 ## Switching Repository
 The repository can easily be switched via the UI: Simply select the "Search" icon in the left sidebar to use the API repository and the "Collection" icon to use the local repository.
 
