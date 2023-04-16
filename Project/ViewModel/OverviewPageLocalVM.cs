@@ -188,6 +188,20 @@ namespace Project.ViewModel
             }
         }
 
+        private bool isSearchButtonLocked = false;
+        private bool IsSearchButtonLocked
+        {
+            get
+            {
+                return isSearchButtonLocked;
+            }
+            set
+            {
+                isSearchButtonLocked = value;
+                SearchCommand.NotifyCanExecuteChanged();
+            }
+        }
+
         public RelayCommand SearchCommand { get; private set; }
         public RelayCommand IncreasePageCommand { get; private set; }
         public RelayCommand DecreasePageCommand { get; private set; }
@@ -279,7 +293,7 @@ namespace Project.ViewModel
             //Load cards
             CardMessage = "Loading cards ...";
             Cards = null;
-            SearchCommand.NotifyCanExecuteChanged();
+            IsSearchButtonLocked = true;
             Cards = await localRepository.LoadCardsAsync(query);
             OnPropertyChanged(nameof(PageNr));
             TotalPages = Math.Max((int)Math.Ceiling((float)localRepository.TotalCards / SelectedPageSize), 1);
@@ -295,7 +309,7 @@ namespace Project.ViewModel
             {
                 CardMessage = "No cards found! Try another search query.";
             }
-            SearchCommand.NotifyCanExecuteChanged();
+            IsSearchButtonLocked = false;
         }
     }
 }

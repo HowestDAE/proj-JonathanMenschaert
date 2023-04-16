@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace Project.ViewModel
 {
@@ -188,6 +189,20 @@ namespace Project.ViewModel
             }
         }
 
+        private bool isSearchButtonLocked = false;
+        private bool IsSearchButtonLocked
+        {
+            get
+            {
+                return isSearchButtonLocked;
+            }
+            set
+            {
+                isSearchButtonLocked = value;
+                SearchCommand.NotifyCanExecuteChanged();
+            }
+        }
+
         public RelayCommand SearchCommand { get; private set; }
         public RelayCommand IncreasePageCommand { get; private set; }
         public RelayCommand DecreasePageCommand { get; private set; }
@@ -235,11 +250,7 @@ namespace Project.ViewModel
 
         private bool CanSearchCards()
         {
-            if (Cards == null)
-            {
-                return false;
-            }
-            return true;
+            return !IsSearchButtonLocked;
         }
 
         private async void SearchCardsAsync()
@@ -278,7 +289,7 @@ namespace Project.ViewModel
             //Load cards
             CardMessage = "Loading cards ...";
             Cards = null;
-            SearchCommand.NotifyCanExecuteChanged();
+            IsSearchButtonLocked = true;
             Cards = await apiRepository.LoadCardsAsync(query);
             OnPropertyChanged(nameof(PageNr));
             TotalPages = (int)Math.Ceiling((float)apiRepository.TotalCards / SelectedPageSize);
@@ -290,7 +301,7 @@ namespace Project.ViewModel
             {
                 CardMessage = "No cards found! Try another search query.";
             }
-            SearchCommand.NotifyCanExecuteChanged();
+            IsSearchButtonLocked = false;
         }
     }
 }
