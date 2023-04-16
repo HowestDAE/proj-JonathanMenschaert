@@ -8,7 +8,7 @@ The overview page gives you access to a search area where you can set the follow
 - Card Type (e.g. Colorless)
 - Card Subtype (e.g. Stage 1)
 - Page Size
-- Page Number
+- Page Number 
 - Name (e.g. Charizard or Char*)
 
 ![Overview Page 1](Media/OverviewPage1.png)
